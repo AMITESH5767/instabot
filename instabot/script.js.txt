@@ -1,0 +1,39 @@
+function getRandomFollowers(count) {
+  const names = [
+    "_aesthetic_queen", "viral_boy123", "sunset.vibes", "coder_dude", "travel_bae",
+    "dreamchaser", "insta_addict", "meme_lord", "fashion.gal", "foodie_life"
+  ];
+  const followers = [];
+  for (let i = 0; i < count; i++) {
+    const name = names[Math.floor(Math.random() * names.length)] + Math.floor(Math.random() * 1000);
+    const profilePic = `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 70) + 1}`;
+    followers.push({ name, profilePic });
+  }
+  return followers;
+}
+
+function boostFollowers() {
+  const username = document.getElementById('username').value;
+  const followerCount = parseInt(document.getElementById('followers').value);
+
+  if (!username || isNaN(followerCount) || followerCount <= 0) {
+    alert('Please enter a valid username and number of followers.');
+    return;
+  }
+
+  const start = Math.floor(Math.random() * 500) + 100; // 100-600
+  const end = start + followerCount;
+
+  const result = document.getElementById('result');
+  result.innerHTML = `<p>@${username}</p><p>Before: ${start} followers</p><p>After: ${end} followers</p>`;
+
+  const followers = getRandomFollowers(followerCount);
+  const followersList = document.getElementById('followers-list');
+  followersList.innerHTML = '';
+  followers.forEach(f => {
+    const followerDiv = document.createElement('div');
+    followerDiv.className = 'follower';
+    followerDiv.innerHTML = `<img src="${f.profilePic}" alt="${f.name}" /><span>${f.name}</span>`;
+    followersList.appendChild(followerDiv);
+  });
+}
